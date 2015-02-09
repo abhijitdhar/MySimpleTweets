@@ -1,6 +1,7 @@
 package com.codepath.apps.mysimpletweets;
 
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,10 +33,29 @@ public class TimeLineActivity extends ActionBarActivity {
 
     User currentUser;
 
+    private SwipeRefreshLayout swipeContainer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_line);
+
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                populateTimeLine(0L);
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
         lvTweets = (ListView) findViewById(R.id.lvTweets);
         tweets = new ArrayList<>();
@@ -92,12 +112,17 @@ public class TimeLineActivity extends ActionBarActivity {
 
     }
 
-    private void populateTimeLine(long max_id) {
+    private void populateTimeLine(final long max_id) {
         client.getHomeTimeLine(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 //Log.d("DEBUG", response.toString());
+                if(max_id == 0L) {
+                    tweetAdapter.clear();
+                }
                 tweetAdapter.addAll(Tweet.fromJSONArray(response));
+
+                swipeContainer.setRefreshing(false);
             }
 
             @Override

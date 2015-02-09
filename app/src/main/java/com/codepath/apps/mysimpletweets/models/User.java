@@ -28,6 +28,9 @@ public class User implements Serializable{
             uid = object.getLong("id");
             screenName = object.getString("screen_name");
             profileImageUrl = object.getString("profile_image_url");
+            // replace "normal with "bigger"
+            profileImageUrl = profileImageUrl.replace("normal","bigger");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
