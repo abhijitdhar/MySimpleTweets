@@ -1,8 +1,11 @@
 package com.codepath.apps.mysimpletweets;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +29,7 @@ public class ComposeActivity extends ActionBarActivity {
 
     private EditText etTweetBody;
     private TextView tvUserName;
+    private TextView tvCharLeft;
 
     private TwitterClient client;
 
@@ -58,6 +62,29 @@ public class ComposeActivity extends ActionBarActivity {
         ImageView ivProfileImage = (ImageView) findViewById(R.id.ivCProfileImage);
         Picasso.with(this).load(currentUser.getProfileImageUrl()).into(ivProfileImage);
 
+        //tvCharLeft = (TextView) findViewById(R.id.action_tvChars);
+
+
+
+        etTweetBody.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int len = s.length();
+                if(tvCharLeft != null)
+                    tvCharLeft.setText("" + (140-len));
+            }
+        });
 
 
     }
@@ -68,6 +95,17 @@ public class ComposeActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_compose, menu);
+
+        //tvCharLeft = (TextView) menu.findItem(R.id.action_tvChars).getActionView();
+
+        tvCharLeft = new TextView(this);
+        tvCharLeft.setText("140");
+        tvCharLeft.setTextColor(getResources().getColor(R.color.primary_white));
+        //tvCharLeft.setOnClickListener();
+        tvCharLeft.setPadding(5, 0, 5, 0);
+        tvCharLeft.setTypeface(null, Typeface.BOLD);
+        tvCharLeft.setTextSize(14);
+        menu.add(0, 0, 1, "140").setActionView(tvCharLeft).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         return true;
     }
 
