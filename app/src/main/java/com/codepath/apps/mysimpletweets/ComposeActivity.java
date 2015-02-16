@@ -42,7 +42,6 @@ public class ComposeActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
 
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         etTweetBody = (EditText) findViewById(R.id.etTweetBody);
@@ -61,10 +60,6 @@ public class ComposeActivity extends ActionBarActivity {
 
         ImageView ivProfileImage = (ImageView) findViewById(R.id.ivCProfileImage);
         Picasso.with(this).load(currentUser.getProfileImageUrl()).into(ivProfileImage);
-
-        //tvCharLeft = (TextView) findViewById(R.id.action_tvChars);
-
-
 
         etTweetBody.addTextChangedListener(new TextWatcher() {
             @Override

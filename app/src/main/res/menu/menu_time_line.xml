@@ -3,9 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.codepath.apps.mysimpletweets.TimeLineActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_compose"
         android:title="@string/action_settings"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_action_name"
+        android:icon="@drawable/ic_compose"
+        android:onClick="onComposeClick"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_profile"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_profile"
+        android:onClick="onProfileClick"
+        app:showAsAction="always" />
+
 </menu>

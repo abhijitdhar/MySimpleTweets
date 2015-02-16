@@ -8,6 +8,7 @@ import android.content.Context;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 /*
@@ -79,5 +80,34 @@ public class TwitterClient extends OAuthBaseClient {
         String apiUrl = getApiUrl("/account/verify_credentials.json");
         getClient().get(apiUrl, handler);
 
+    }
+
+    public void getUserProfileOf(String screenName, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("/users/lookup.json?screen_name=" + screenName);
+        getClient().get(apiUrl, handler);
+
+    }
+
+    public void getMentionsTimeLine(JsonHttpResponseHandler handler, long max_id) {
+        String apiUrl = getApiUrl("/statuses/mentions_timeline.json");
+        RequestParams params = new RequestParams();
+        params.put("count", 25);
+
+        if(max_id > 0) {
+            params.put("max_id", max_id-1);
+        }
+
+        getClient().get(apiUrl, params, handler);
+    }
+
+    public void getUserTimeline(String screenName, JsonHttpResponseHandler handler, long max_id) {
+        String apiUrl = getApiUrl("/statuses/user_timeline.json");
+        RequestParams params = new RequestParams();
+        params.put("count", 25);
+        if(max_id > 0) {
+            params.put("max_id", max_id-1);
+        }
+        params.put("screen_name", screenName);
+        getClient().get(apiUrl, params, handler);
     }
 }

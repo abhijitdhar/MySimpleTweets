@@ -1,5 +1,6 @@
 package com.codepath.apps.mysimpletweets.models;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,6 +17,10 @@ public class User implements Serializable{
     private long uid;
     private String screenName;
     private String profileImageUrl;
+    private int followersCount;
+    private int friendsCount;
+    private String tagLine;
+
 
     public User(String name, String screenName) {
         this.name = name;
@@ -31,10 +36,33 @@ public class User implements Serializable{
             // replace "normal with "bigger"
             profileImageUrl = profileImageUrl.replace("normal","bigger");
 
+            followersCount = object.getInt("followers_count");
+            friendsCount = object.getInt("friends_count");
+
+            tagLine = object.getString("description");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
+    public User(JSONArray response) throws JSONException {
+        //JSONObject jsonObject = response.getJSONObject(0);
+        this(response.getJSONObject(0));
+    }
+
+    public String getFollowers() {
+        return followersCount + " Following";
+    }
+
+    public String getFriends() {
+        return friendsCount + " Followers";
+    }
+
+    public String getTagLine() {
+        return tagLine;
+    }
+
 
     public String getName() {
         return name;
@@ -50,5 +78,9 @@ public class User implements Serializable{
 
     public String getProfileImageUrl() {
         return profileImageUrl;
+    }
+
+    public String getRawScreenName() {
+        return screenName;
     }
 }
