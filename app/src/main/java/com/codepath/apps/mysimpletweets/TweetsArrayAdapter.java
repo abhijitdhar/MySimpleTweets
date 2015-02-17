@@ -9,10 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codepath.apps.mysimpletweets.models.Tweet;
-import com.codepath.apps.mysimpletweets.models.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -22,23 +20,16 @@ import java.util.List;
  */
 public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
 
-
     public TweetsArrayAdapter(Context context, List<Tweet> tweets) {
         super(context, 0, tweets);
     }
-
-
-
-    //TODO: viewHolder pattern
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         Tweet tweet = getItem(position);
-        if(convertView == null) {
+        if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tweet, parent, false);
-
-
         }
 
         ImageView ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
@@ -61,15 +52,13 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
             public void onClick(View v) {
                 //Toast.makeText(getContext(), "clicked", Toast.LENGTH_SHORT).show();
 
-
                 Intent i = new Intent(getContext(), ProfileActivity.class);
                 i.putExtra("raw_screen_name", v.getTag(R.id.tvCUsername).toString());
                 getContext().startActivity(i);
-
             }
         });
 
-        return  convertView;
+        return convertView;
     }
 
 }

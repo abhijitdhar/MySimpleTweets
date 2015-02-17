@@ -37,9 +37,7 @@ public class MentionsTimelineFragment extends TweetsListFragment {
                     clear();
                 }
                 addAll(Tweet.fromJSONArray(response));
-
-
-                //TODO Swipe refresh  swipeContainer.setRefreshing(false);
+                swipeContainer.setRefreshing(false);
             }
 
             @Override

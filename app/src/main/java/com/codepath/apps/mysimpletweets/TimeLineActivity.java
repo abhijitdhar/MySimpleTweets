@@ -1,13 +1,13 @@
 package com.codepath.apps.mysimpletweets;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -15,7 +15,6 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.apps.mysimpletweets.fragments.HomeTimeLineFragment;
 import com.codepath.apps.mysimpletweets.fragments.MentionsTimelineFragment;
 import com.codepath.apps.mysimpletweets.fragments.TweetsListFragment;
-import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.codepath.apps.mysimpletweets.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -24,7 +23,6 @@ import org.json.JSONObject;
 
 public class TimeLineActivity extends ActionBarActivity {
 
-
     private static final int REQUEST_COMPOSE_RESULT_CODE = 50;
 
     User currentUser;
@@ -32,9 +30,6 @@ public class TimeLineActivity extends ActionBarActivity {
     private TwitterClient client;
 
     private TweetsListFragment homeTimelineFragment;
-
-
-    private SwipeRefreshLayout swipeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,30 +42,6 @@ public class TimeLineActivity extends ActionBarActivity {
         PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabStrip.setViewPager(vpPager);
 
-        //TODO swipe refresh
-/*
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-        // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
-                populateTimeLine(0L);
-            }
-        });
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-
-*/
-
-
-        //getSupportFragmentManager().findFragmentById(R.id);
-
         client = TwitterApplication.getRestClient();
 
         client.getCurrentUserProfile(new JsonHttpResponseHandler() {
@@ -80,12 +51,7 @@ public class TimeLineActivity extends ActionBarActivity {
                 currentUser = new User(response);
             }
         });
-
-
-
     }
-
-
 
 
     @Override
@@ -110,7 +76,6 @@ public class TimeLineActivity extends ActionBarActivity {
     }
 
 
-
     public void onProfileClick(MenuItem item) {
         Intent i = new Intent(this, ProfileActivity.class);
         i.putExtra("currentUser", currentUser);
@@ -125,7 +90,7 @@ public class TimeLineActivity extends ActionBarActivity {
     }
 
     public class TweetsPagerAdapter extends FragmentPagerAdapter {
-        private String tabTitles[] = {"Home" , "Mentions"};
+        private String tabTitles[] = {"Home", "Mentions"};
 
         public TweetsPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
@@ -133,14 +98,13 @@ public class TimeLineActivity extends ActionBarActivity {
 
         @Override
         public Fragment getItem(int position) {
-            if(position == 0) {
+            if (position == 0) {
                 homeTimelineFragment = new HomeTimeLineFragment();
                 return homeTimelineFragment;
-            }
-            else if(position == 1) {
-                return  new MentionsTimelineFragment();
+            } else if (position == 1) {
+                return new MentionsTimelineFragment();
             } else {
-                return  null;
+                return null;
             }
         }
 

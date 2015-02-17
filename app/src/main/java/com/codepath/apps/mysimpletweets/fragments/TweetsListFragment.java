@@ -3,6 +3,7 @@ package com.codepath.apps.mysimpletweets.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import java.util.List;
 public abstract class TweetsListFragment extends Fragment {
 
     private TwitterClient client;
+    protected SwipeRefreshLayout swipeContainer;
 
     ArrayList<Tweet> tweets;
     ListView lvTweets;
@@ -35,6 +37,24 @@ public abstract class TweetsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tweets_list, container, false);
+
+        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                populateTimeLine(0L);
+
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
         lvTweets = (ListView) v.findViewById(R.id.lvTweets);
         lvTweets.setAdapter(tweetAdapter);
         lvTweets.setOnScrollListener(new EndlessScrollListener() {
@@ -59,6 +79,10 @@ public abstract class TweetsListFragment extends Fragment {
 
         tweets = new ArrayList<>();
         tweetAdapter = new TweetsArrayAdapter(getActivity(), tweets);
+
+        // Setup refresh listener which triggers new data loading
+
+
 
     }
 
