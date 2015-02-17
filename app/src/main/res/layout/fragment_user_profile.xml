@@ -36,7 +36,8 @@
         android:layout_below="@+id/tvCName1"
         android:layout_toRightOf="@+id/ivCProfileImage1"
         android:layout_toEndOf="@+id/ivCProfileImage1"
-        android:textSize="10sp"/>
+        android:textSize="10sp"
+        android:autoLink="all"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,18 +45,35 @@
         android:text="Followers Count"
         android:id="@+id/tvFollowers"
         android:layout_below="@+id/ivCProfileImage1"
+        android:layout_alignParentLeft="true"
         android:textSize="10sp"
-        android:layout_marginRight="5sp"/>
+        android:layout_marginRight="5sp"
+        android:layout_marginTop="10sp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Friends Count"
-        android:id="@+id/tvFriends"
-        android:layout_toRightOf="@+id/tvFollowers"
-        android:layout_alignBottom="@id/tvFollowers"
-        android:textSize="10sp"
-        />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Friends Count"
+            android:id="@+id/tvFriends"
+
+            android:gravity="right"
+            android:textSize="10sp"
+            android:layout_alignTop="@+id/tvFollowers"
+            android:layout_toEndOf="@+id/tvFollowers"
+            android:layout_toRightOf="@id/tvFollowers"/>
+
+
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@id/tvFollowers"
+        android:layout_marginTop="5sp"
+        android:layout_marginBottom="5sp"/>
+
 
 
 </RelativeLayout>

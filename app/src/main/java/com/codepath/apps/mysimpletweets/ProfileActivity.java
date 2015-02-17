@@ -52,7 +52,7 @@ public class ProfileActivity extends ActionBarActivity {
             });
         }
         else {
-            screenName = currentUser.getScreenName();
+            screenName = currentUser.getRawScreenName();
             populateProfileHeader(currentUser);
         }
 

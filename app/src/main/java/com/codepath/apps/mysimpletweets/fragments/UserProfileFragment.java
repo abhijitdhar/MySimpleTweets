@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +60,7 @@ public class UserProfileFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_user_profile, container, false);
 
         TextView tvTagLine = (TextView) v.findViewById(R.id.tvTagLine);
-        tvTagLine.setText(currentUser.getTagLine());
+        tvTagLine.setText(Html.fromHtml(currentUser.getTagLine()));
 
         TextView tvName = (TextView) v.findViewById(R.id.tvCName1);
         tvName.setText(currentUser.getName());
